@@ -107,6 +107,19 @@ namespace Runner.List
 
         public void Add(T item)
         {
+            var current = Head;
+            while (current != null)
+            {
+                if (current.Value.CompareTo(item) > 0)
+                {
+                    InsertBefore(current, item);
+
+                    return;
+                }
+
+                current = current.Next;
+            }
+
             AddTail(item);
         }
 
@@ -203,7 +216,7 @@ namespace Runner.List
         {
             if (node == null)
             {
-                AddHead(item);
+                AddTail(item);
 
                 return;
             }
@@ -226,6 +239,41 @@ namespace Runner.List
                     }
 
                     current.Next = newNode;
+
+                    break;
+                }
+
+                current = current.Next;
+            }
+        }
+
+        public void InsertBefore(DoublyLinkedListNode<T> node, T item)
+        {
+            if (node == null)
+            {
+                AddHead(item);
+
+                return;
+            }
+
+            var current = Head;
+
+            while (current != null)
+            {
+                if (current == node)
+                {
+                    var newNode = new DoublyLinkedListNode<T>(item) {Next = current, Prev = current.Prev};
+
+                    if (current.Prev == null)
+                    {
+                        Head = newNode;
+                    }
+                    else
+                    {
+                        current.Prev.Next = newNode;
+                    }
+
+                    current.Prev = newNode;
 
                     break;
                 }
