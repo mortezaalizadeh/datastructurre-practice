@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Runner.List
 {
@@ -16,7 +17,7 @@ namespace Runner.List
         }
     }
 
-    public class DoublyLinkedList<T> : System.Collections.Generic.ICollection<T> where T : IComparable<T>
+    public class DoublyLinkedList<T> : ICollection<T>, IFormattable where T : IComparable<T>
     {
         public DoublyLinkedListNode<T> Head { get; private set; }
         public DoublyLinkedListNode<T> Tail { get; private set; }
@@ -198,6 +199,41 @@ namespace Runner.List
 
         public bool IsReadOnly { get; } = false;
 
+        public void InsertAfter(DoublyLinkedListNode<T> node, T item)
+        {
+            if (node == null)
+            {
+                AddHead(item);
+
+                return;
+            }
+
+            var current = Head;
+
+            while (current != null)
+            {
+                if (current == node)
+                {
+                    var newNode = new DoublyLinkedListNode<T>(item) {Next = current.Next, Prev = current};
+
+                    if (current.Next == null)
+                    {
+                        Tail = newNode;
+                    }
+                    else
+                    {
+                        current.Next.Prev = newNode;
+                    }
+
+                    current.Next = newNode;
+
+                    break;
+                }
+
+                current = current.Next;
+            }
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             var current = Head;
@@ -212,6 +248,14 @@ namespace Runner.List
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public string ToString(string? format, IFormatProvider? formatProvider)
+        {
+            return this.Aggregate(
+                    string.Empty,
+                    (reduction, value) => $"{reduction}, {value.ToString()}")
+                .Trim(',');
         }
     }
 }

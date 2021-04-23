@@ -15,8 +15,18 @@ namespace Runner
         {
             var list = new DoublyLinkedList<int>();
 
+            list.InsertAfter(null, 4);
+            Console.WriteLine(list);
+
             list.AddHead(10);
             list.AddHead(20);
+            
+            list.InsertAfter(list.Find(10), 5);
+            Console.WriteLine(list);
+
+            list.InsertAfter(list.Find(4), 6);
+            Console.WriteLine(list);
+
             list.AddHead(30);
 
             list.AddTail(1);
@@ -28,12 +38,6 @@ namespace Runner
 
             list.Contains(10);
             list.Contains(100);
-
-            Console.WriteLine(
-                list.Aggregate(
-                        string.Empty,
-                        (reduction, value) => $"{reduction}, {value.ToString()}")
-                    .Trim(','));
         }
     }
 }
