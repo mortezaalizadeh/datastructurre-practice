@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Runner.List
+namespace Runner
 {
     public class DoublyLinkedListNode<T> where T : IComparable<T>
     {
@@ -17,59 +17,59 @@ namespace Runner.List
         }
     }
 
-    public class DoublyLinkedList<T> : ICollection<T>, IFormattable where T : IComparable<T>
+    public class DoublyLinkedList<T> : ICollection<T> where T : IComparable<T>
     {
-        public DoublyLinkedListNode<T> Head { get; private set; }
-        public DoublyLinkedListNode<T> Tail { get; private set; }
+        private DoublyLinkedListNode<T> _head;
+        private DoublyLinkedListNode<T> _tail;
 
         public void AddHead(T item)
         {
-            if (Head == null && Tail == null)
+            if (_head == null && _tail == null)
             {
-                Head = new DoublyLinkedListNode<T>(item);
-                Tail = Head;
+                _head = new DoublyLinkedListNode<T>(item);
+                _tail = _head;
             }
-            else if (Head != null)
+            else if (_head != null)
             {
-                Head.Prev = new DoublyLinkedListNode<T>(item) {Next = Head};
-                Head = Head.Prev;
+                _head.Prev = new DoublyLinkedListNode<T>(item) {Next = _head};
+                _head = _head.Prev;
             }
         }
 
         public void AddTail(T item)
         {
-            if (Head == null && Tail == null)
+            if (_head == null && _tail == null)
             {
-                Head = new DoublyLinkedListNode<T>(item);
-                Tail = Head;
+                _head = new DoublyLinkedListNode<T>(item);
+                _tail = _head;
             }
-            else if (Tail != null)
+            else if (_tail != null)
             {
-                Tail.Next = new DoublyLinkedListNode<T>(item) {Prev = Tail};
-                Tail = Tail.Next;
+                _tail.Next = new DoublyLinkedListNode<T>(item) {Prev = _tail};
+                _tail = _tail.Next;
             }
         }
 
         public bool RemoveHead()
         {
-            if (Head == null)
+            if (_head == null)
             {
                 return false;
             }
             else
             {
-                if (Head == Tail)
+                if (_head == _tail)
                 {
-                    Head = null;
-                    Tail = null;
+                    _head = null;
+                    _tail = null;
                 }
                 else
                 {
-                    Head = Head.Next;
-                    Head.Prev = null;
-                    if (Head == null)
+                    _head = _head.Next;
+                    _head.Prev = null;
+                    if (_head == null)
                     {
-                        Tail = null;
+                        _tail = null;
                     }
                 }
 
@@ -79,25 +79,25 @@ namespace Runner.List
 
         public bool RemoveTail()
         {
-            if (Tail == null)
+            if (_tail == null)
             {
                 return false;
             }
             else
             {
-                if (Head == Tail)
+                if (_head == _tail)
                 {
-                    Head = null;
-                    Tail = null;
+                    _head = null;
+                    _tail = null;
                 }
                 else
                 {
-                    Tail = Tail.Prev;
-                    Tail.Next = null;
+                    _tail = _tail.Prev;
+                    _tail.Next = null;
 
-                    if (Tail == null)
+                    if (_tail == null)
                     {
-                        Head = null;
+                        _head = null;
                     }
                 }
 
@@ -107,7 +107,7 @@ namespace Runner.List
 
         public void Add(T item)
         {
-            var current = Head;
+            var current = _head;
             while (current != null)
             {
                 if (current.Value.CompareTo(item) > 0)
@@ -123,15 +123,39 @@ namespace Runner.List
             AddTail(item);
         }
 
+        public bool PeekHead(ref T item)
+        {
+            if (_head == null)
+            {
+                return false;
+            }
+
+            item = _head.Value;
+
+            return true;
+        }
+
+        public bool PeekTail(ref T item)
+        {
+            if (_tail == null)
+            {
+                return false;
+            }
+
+            item = _tail.Value;
+
+            return true;
+        }
+
         public void Clear()
         {
-            Head = null;
-            Tail = null;
+            _head = null;
+            _tail = null;
         }
 
         public DoublyLinkedListNode<T> Find(T item)
         {
-            var current = Head;
+            var current = _head;
 
             while (current != null)
             {
@@ -150,7 +174,7 @@ namespace Runner.List
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            var current = Head;
+            var current = _head;
 
             while (current != null)
             {
@@ -161,7 +185,7 @@ namespace Runner.List
 
         public bool Remove(T item)
         {
-            var current = Head;
+            var current = _head;
             var prev = current;
             var removed = false;
 
@@ -169,9 +193,9 @@ namespace Runner.List
             {
                 if (current.Value.CompareTo(item) == 0)
                 {
-                    if (Head == current)
+                    if (_head == current)
                     {
-                        Head = Head.Next;
+                        _head = _head.Next;
                     }
                     else
                     {
@@ -185,9 +209,9 @@ namespace Runner.List
                 current = current.Next;
             } while (current != null);
 
-            if (Head == null)
+            if (_head == null)
             {
-                Tail = null;
+                _tail = null;
             }
 
             return removed;
@@ -197,7 +221,7 @@ namespace Runner.List
         {
             get
             {
-                var current = Head;
+                var current = _head;
                 var count = 0;
 
                 while (current != null)
@@ -221,7 +245,7 @@ namespace Runner.List
                 return;
             }
 
-            var current = Head;
+            var current = _head;
 
             while (current != null)
             {
@@ -231,7 +255,7 @@ namespace Runner.List
 
                     if (current.Next == null)
                     {
-                        Tail = newNode;
+                        _tail = newNode;
                     }
                     else
                     {
@@ -256,7 +280,7 @@ namespace Runner.List
                 return;
             }
 
-            var current = Head;
+            var current = _head;
 
             while (current != null)
             {
@@ -266,7 +290,7 @@ namespace Runner.List
 
                     if (current.Prev == null)
                     {
-                        Head = newNode;
+                        _head = newNode;
                     }
                     else
                     {
@@ -284,7 +308,7 @@ namespace Runner.List
 
         public IEnumerator<T> GetEnumerator()
         {
-            var current = Head;
+            var current = _head;
 
             while (current != null)
             {
@@ -293,17 +317,13 @@ namespace Runner.List
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            return this.Aggregate(
+        public override string ToString() =>
+            this.Aggregate(
                     string.Empty,
                     (reduction, value) => $"{reduction}, {value.ToString()}")
-                .Trim(',');
-        }
+                .Trim(',')
+                .Trim();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Runner.List;
 
 namespace Runner
 {
@@ -9,6 +8,8 @@ namespace Runner
         private static void Main()
         {
             TestDoublyLinkList();
+            TestQueue();
+            TestStack();
         }
 
         private static void TestDoublyLinkList()
@@ -48,5 +49,47 @@ namespace Runner
             list.Contains(10);
             list.Contains(100);
         }
+
+        private static void TestQueue()
+        {
+            var queue = new Queue<int>();
+            var item = 0;
+            
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(4);
+
+            Console.WriteLine(queue.Dequeue(ref item));
+            Console.WriteLine(item);
+            
+            Console.WriteLine(queue.Dequeue(ref item));
+            Console.WriteLine(item);
+
+            queue.Enqueue(5);
+            queue.Enqueue(3);
+            
+            Console.WriteLine(queue);
+        }
+
+        private static void TestStack()
+        {
+            var stack = new Stack<int>();
+            var item = 0;
+            
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(4);
+
+            Console.WriteLine(stack.Pop(ref item));
+            Console.WriteLine(item);
+            
+            Console.WriteLine(stack.Pop(ref item));
+            Console.WriteLine(item);
+
+            stack.Push(5);
+            stack.Push(3);
+            
+            Console.WriteLine(stack);
+       }
     }
 }
