@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace DataStructure
 {
@@ -40,7 +39,10 @@ namespace DataStructure
                 Add(item, _root);
         }
 
-        public bool Contains(T item) => Find(item, out _) != null;
+        public bool Contains(T item)
+        {
+            return Find(item, out _) != null;
+        }
 
         public bool Remove(T item)
         {

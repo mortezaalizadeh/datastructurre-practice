@@ -11,19 +11,13 @@ namespace DataStructure
                 var again = false;
                 for (var j = i + 1; j < data.Length; j++)
                 {
-                    if (data[i].CompareTo(data[j]) <= 0)
-                    {
-                        continue;
-                    }
-                    
+                    if (data[i].CompareTo(data[j]) <= 0) continue;
+
                     Swap(data, i, j);
                     again = true;
                 }
 
-                if (!again)
-                {
-                    break;
-                }
+                if (!again) break;
             }
 
             return data;
