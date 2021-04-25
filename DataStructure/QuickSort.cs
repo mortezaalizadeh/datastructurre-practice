@@ -8,20 +8,20 @@ namespace DataStructure
 
         public override T[] Sort(T[] data)
         {
-            return Sort(data, 0, data.Length - 1);
+            Sort(data, 0, data.Length - 1);
+
+            return data;
         }
 
-        private T[] Sort(T[] data, int left, int right)
+        private void Sort(T[] data, int left, int right)
         {
-            if (left >= right) return data;
+            if (left >= right) return;
 
             var pivotIndex = _random.Next(left, right);
             var newPivot = Partition(data, left, right, pivotIndex);
 
             Sort(data, left, newPivot - 1);
             Sort(data, newPivot + 1, right);
-
-            return data;
         }
 
         private int Partition(T[] data, int left, int right, int pivotIndex)
