@@ -1,6 +1,6 @@
 using System;
 
-namespace DataStructure
+namespace DataStructure.Sort
 {
     public class BubbleSort<T> : SortBase<T> where T : IComparable<T>
     {

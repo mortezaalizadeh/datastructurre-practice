@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataStructure
+namespace DataStructure.Sort
 {
     public class MergeSort<T> : SortBase<T> where T : IComparable<T>
     {

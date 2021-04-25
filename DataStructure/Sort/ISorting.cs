@@ -1,4 +1,4 @@
-namespace DataStructure
+namespace DataStructure.Sort
 {
     public interface ISorting<T>
     {

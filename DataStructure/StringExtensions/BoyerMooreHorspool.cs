@@ -11,28 +11,27 @@ namespace DataStructure.StringExtensions
 
             if (pattern == null) throw new ArgumentNullException(nameof(pattern));
 
-            if (str.Length > 0 && pattern.Length > 0)
+            if (str.Length <= 0 || pattern.Length <= 0) yield break;
+
+            var badMatchTable = new BadMatchTable(pattern);
+            var currentStartIdx = 0;
+
+            while (currentStartIdx < str.Length - pattern.Length)
             {
-                var badMatchTable = new BadMatchTable(pattern);
-                var currentStartIdx = 0;
+                var charactersLeftToMatch = pattern.Length - 1;
 
-                while (currentStartIdx < str.Length - pattern.Length)
+                while (charactersLeftToMatch >= 0 &&
+                       pattern[charactersLeftToMatch] == str[currentStartIdx + charactersLeftToMatch])
+                    charactersLeftToMatch--;
+
+                if (charactersLeftToMatch < 0)
                 {
-                    var charactersLeftToMatch = pattern.Length - 1;
-
-                    while (charactersLeftToMatch >= 0 &&
-                           pattern[charactersLeftToMatch] == str[currentStartIdx + charactersLeftToMatch])
-                        charactersLeftToMatch--;
-
-                    if (charactersLeftToMatch < 0)
-                    {
-                        yield return currentStartIdx;
-                        currentStartIdx += pattern.Length;
-                    }
-                    else
-                    {
-                        currentStartIdx += badMatchTable[str[currentStartIdx + pattern.Length - 1]];
-                    }
+                    yield return currentStartIdx;
+                    currentStartIdx += pattern.Length;
+                }
+                else
+                {
+                    currentStartIdx += badMatchTable[str[currentStartIdx + pattern.Length - 1]];
                 }
             }
         }

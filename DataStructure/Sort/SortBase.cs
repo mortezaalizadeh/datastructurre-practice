@@ -1,6 +1,6 @@
 using System;
 
-namespace DataStructure
+namespace DataStructure.Sort
 {
     public abstract class SortBase<T> : ISorting<T> where T : IComparable<T>
     {

@@ -2,7 +2,7 @@ using System;
 using DataStructure.StringExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DataStructureUnitTests.StringExtensionsTests
+namespace DataStructureUnitTests
 {
     [TestClass]
     public class BoyerMooreHorspoolTests

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DataStructure;
+using DataStructure.Tree;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataStructureUnitTests

@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using DataStructure;
+using DataStructure.Sort;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataStructureUnitTests
