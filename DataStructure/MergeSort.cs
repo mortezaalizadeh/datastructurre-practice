@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace DataStructure
 {
@@ -23,21 +24,21 @@ namespace DataStructure
             return Merge(data, left, right);
         }
 
-        private static T[] Merge(T[] data, T[] left, T[] right)
+        private static T[] Merge(T[] data, IReadOnlyList<T> left, IReadOnlyList<T> right)
         {
             var leftIdx = 0;
             var rightIdx = 0;
             var dataIdx = 0;
 
             while (dataIdx < data.Length)
-                if (leftIdx < left.Length && rightIdx < right.Length)
+                if (leftIdx < left.Count && rightIdx < right.Count)
                 {
                     if (left[leftIdx].CompareTo(right[rightIdx]) < 0)
                         data[dataIdx++] = left[leftIdx++];
                     else
                         data[dataIdx++] = right[rightIdx++];
                 }
-                else if (leftIdx < left.Length)
+                else if (leftIdx < left.Count)
                 {
                     data[dataIdx++] = left[leftIdx++];
                 }

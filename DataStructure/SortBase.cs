@@ -8,6 +8,8 @@ namespace DataStructure
 
         protected void Swap(T[] data, int left, int right)
         {
+            if (left == right) return;
+
             var temp = data[left];
             data[left] = data[right];
             data[right] = temp;
