@@ -4,49 +4,37 @@ using System.Collections.Generic;
 
 namespace Algorithms.Lists
 {
-    public class LinkedListNode<T> where T : IComparable<T>
+    public class DoublyLinkedListNode<T> where T : IComparable<T>
     {
-        public LinkedListNode(T value)
+        public DoublyLinkedListNode(T value)
         {
             Value = value;
         }
 
         public T Value { get; }
-        public LinkedListNode<T> Next { get; set; }
+        public DoublyLinkedListNode<T> Prev { get; set; }
+        public DoublyLinkedListNode<T> Next { get; set; }
     }
 
-    public class LinkedList<T> : ICollection<T> where T : IComparable<T>
+    public class DoublyLinkedList<T> : ICollection<T> where T : IComparable<T>
     {
-        private LinkedListNode<T> _head;
+        private DoublyLinkedListNode<T> _head;
+        private DoublyLinkedListNode<T> _tail;
 
-        public LinkedList()
+        public DoublyLinkedList()
         {
         }
 
-        public LinkedList(IEnumerable<T> items)
+        public DoublyLinkedList(IEnumerable<T> items)
         {
-            foreach (var item in items) Add(item);
+            foreach (var item in items)
+                AddTail(item);
         }
 
         public void Add(T item)
         {
-            if (_head == null)
-            {
-                _head = new LinkedListNode<T>(item);
-            }
-            else
-            {
-                var current = _head;
-
-                while (current.Next != null) current = current.Next;
-
-                current.Next = new LinkedListNode<T>(item);
-                current.Next.Next = null;
-            }
-
-            Count++;
+            AddTail(item);
         }
-
 
         public int Count { get; private set; }
 
@@ -86,23 +74,34 @@ namespace Algorithms.Lists
         public bool Remove(T item)
         {
             var current = _head;
-            LinkedListNode<T> prev = null;
 
             while (current != null)
             {
                 if (current.Value.CompareTo(item) == 0)
                 {
                     if (current == _head)
+                    {
                         _head = _head.Next;
+                        _head.Prev = null;
+                    }
                     else
-                        prev.Next = current.Next;
+                    {
+                        if (current.Next == null)
+                        {
+                            current.Prev.Next = null;
+                        }
+                        else
+                        {
+                            current.Prev.Next = current.Next;
+                            current.Next.Prev = current.Prev;
+                        }
+                    }
 
                     Count--;
 
                     return true;
                 }
 
-                prev = current;
                 current = current.Next;
             }
 
@@ -127,12 +126,30 @@ namespace Algorithms.Lists
 
         public void AddHead(T item)
         {
-            var node = new LinkedListNode<T>(item)
+            if (_head == null && _tail == null)
             {
-                Next = _head
-            };
+                _head = _tail = new DoublyLinkedListNode<T>(item);
+            }
+            else if (_head != null)
+            {
+                _head.Prev = new DoublyLinkedListNode<T>(item) {Next = _head};
+                _head = _head.Prev;
+            }
 
-            _head = node;
+            Count++;
+        }
+
+        public void AddTail(T item)
+        {
+            if (_head == null && _tail == null)
+            {
+                _head = _tail = new DoublyLinkedListNode<T>(item);
+            }
+            else if (_tail != null)
+            {
+                _tail.Next = new DoublyLinkedListNode<T>(item) {Prev = _tail};
+                _tail = _tail.Next;
+            }
 
             Count++;
         }
@@ -140,7 +157,6 @@ namespace Algorithms.Lists
         public bool InsertBefore(T item, T value)
         {
             var current = _head;
-            LinkedListNode<T> prev = null;
 
             while (current != null)
             {
@@ -152,19 +168,25 @@ namespace Algorithms.Lists
                     }
                     else
                     {
-                        var node = new LinkedListNode<T>(value)
+                        var node = new DoublyLinkedListNode<T>(value)
                         {
-                            Next = current
+                            Next = current,
+                            Prev = current.Prev
                         };
 
-                        prev.Next = node;
+                        if (current.Prev == null)
+                            _head = node;
+                        else
+                            current.Prev.Next = node;
+
+                        current.Prev = node;
+
                         Count++;
                     }
 
                     return true;
                 }
 
-                prev = current;
                 current = current.Next;
             }
 
@@ -179,12 +201,19 @@ namespace Algorithms.Lists
             {
                 if (current.Value.CompareTo(item) == 0)
                 {
-                    var node = new LinkedListNode<T>(value)
+                    var node = new DoublyLinkedListNode<T>(value)
                     {
-                        Next = current.Next
+                        Next = current.Next,
+                        Prev = current
                     };
 
+                    if (current.Next == null)
+                        _tail = node;
+                    else
+                        current.Next.Prev = node;
+
                     current.Next = node;
+
                     Count++;
 
                     return true;
@@ -194,6 +223,17 @@ namespace Algorithms.Lists
             }
 
             return false;
+        }
+
+        public IEnumerable<T> GetReverseEnumerator()
+        {
+            var current = _tail;
+
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Prev;
+            }
         }
     }
 }
