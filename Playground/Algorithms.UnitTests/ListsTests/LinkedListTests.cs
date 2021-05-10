@@ -7,7 +7,7 @@ namespace Algorithms.UnitTests.Lists
 {
     public class LinkedListTests
     {
-        private readonly Random _reandom = new();
+        private readonly Random _random = new();
 
         [Fact]
         public void Empty_List_Count_Should_Be_Zero()
@@ -52,7 +52,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Constructor_Should_Keep_Added_Order()
         {
-            var expectedList = Enumerable.Range(0, _reandom.Next(100, 1000)).Select(i => _reandom.Next(0, 1000000))
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
                 .ToList();
             var list = new LinkedList<int>(expectedList);
 
@@ -62,7 +62,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Should_Keep_Added_Order()
         {
-            var expectedList = Enumerable.Range(0, _reandom.Next(100, 1000)).Select(i => _reandom.Next(0, 1000000))
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
                 .ToList();
             var list = new LinkedList<int>();
 
@@ -74,7 +74,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Should_Return_Count_Correctly()
         {
-            var expectedList = Enumerable.Range(0, _reandom.Next(100, 1000)).Select(i => _reandom.Next(0, 1000000))
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
                 .ToList();
             var list = new LinkedList<int>(expectedList);
 
@@ -84,7 +84,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Clear_Should_Set_Count_To_Zero()
         {
-            var expectedList = Enumerable.Range(0, _reandom.Next(100, 1000)).Select(i => _reandom.Next(0, 1000000))
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
                 .ToList();
             var list = new LinkedList<int>(expectedList);
 
