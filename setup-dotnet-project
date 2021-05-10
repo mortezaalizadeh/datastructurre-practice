@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+mkdir Playground
+mkdir Playground/Algorithms
+mkdir Playground/Algorithms.UnitTests
+cd Playground
+dotnet new sln
+cd Algorithms
+dotnet new classlib
+cd ../Algorithms.UnitTests
+dotnet new xunit
+dotnet add reference ../Algorithms
+cd ..
+dotnet sln add Algorithms Algorithms.UnitTests
+cd ..
+
