@@ -17,7 +17,7 @@ namespace Algorithms.Lists
 
     public class LinkedList<T> : ICollection<T> where T : IComparable<T>
     {
-        private LinkedListNode<T> _head = null;
+        private LinkedListNode<T> _head;
 
         public LinkedList()
         {
@@ -28,10 +28,7 @@ namespace Algorithms.Lists
         {
             _head = null;
 
-            foreach (var item in items)
-            {
-                Add(item);
-            }
+            foreach (var item in items) Add(item);
         }
 
         public void Add(T item)
@@ -44,16 +41,91 @@ namespace Algorithms.Lists
             {
                 var current = _head;
 
-                while (current.Next != null)
-                {
-                    current = current.Next;
-                }
+                while (current.Next != null) current = current.Next;
 
                 current.Next = new LinkedListNode<T>(item);
                 current.Next.Next = null;
             }
 
             Count++;
+        }
+
+
+        public int Count { get; private set; }
+
+        public bool IsReadOnly => false;
+
+        public void Clear()
+        {
+            _head = null;
+            Count = 0;
+        }
+
+        public bool Contains(T item)
+        {
+            var current = _head;
+
+            while (current != null)
+            {
+                if (current.Value.CompareTo(item) == 0) return true;
+
+                current = current.Next;
+            }
+
+            return false;
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            var current = _head;
+
+            while (current != null && array.Length > arrayIndex)
+            {
+                array[arrayIndex++] = current.Value;
+                current = current.Next;
+            }
+        }
+
+        public bool Remove(T item)
+        {
+            var current = _head;
+            LinkedListNode<T> prev = null;
+
+            while (current != null)
+            {
+                if (current.Value.CompareTo(item) == 0)
+                {
+                    if (current == _head)
+                        _head = _head.Next;
+                    else
+                        prev.Next = current.Next;
+
+                    Count--;
+
+                    return true;
+                }
+
+                prev = current;
+                current = current.Next;
+            }
+
+            return false;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var current = _head;
+
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public void AddHead(T item)
@@ -125,91 +197,6 @@ namespace Algorithms.Lists
             }
 
             return false;
-        }
-
-
-        public int Count { get; private set; } = 0;
-
-        public bool IsReadOnly => false;
-
-        public void Clear()
-        {
-            _head = null;
-            Count = 0;
-        }
-
-        public bool Contains(T item)
-        {
-            var current = _head;
-
-            while (current != null)
-            {
-                if (current.Value.CompareTo(item) == 0)
-                {
-                    return true;
-                }
-
-                current = current.Next;
-            }
-
-            return false;
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            var current = _head;
-
-            while (current != null && array.Length > arrayIndex)
-            {
-                array[arrayIndex++] = current.Value;
-                current = current.Next;
-            }
-        }
-
-        public bool Remove(T item)
-        {
-            var current = _head;
-            LinkedListNode<T> prev = null;
-
-            while (current != null)
-            {
-                if (current.Value.CompareTo(item) == 0)
-                {
-                    if (current == _head)
-                    {
-                        _head = _head.Next;
-                    }
-                    else
-                    {
-                        prev.Next = current.Next;
-                    }
-
-                    Count--;
-
-                    return true;
-                }
-
-                prev = current;
-                current = current.Next;
-            }
-
-            return false;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            var current = _head;
-
-            while (current != null)
-            {
-                yield return current.Value;
-                current = current.Next;
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }
