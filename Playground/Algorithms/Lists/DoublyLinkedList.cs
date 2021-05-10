@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Algorithms.Lists
 {
@@ -234,6 +235,88 @@ namespace Algorithms.Lists
                 yield return current.Value;
                 current = current.Prev;
             }
+        }
+
+        public bool PeekHead([MaybeNullWhen(false)] out T value)
+        {
+            if (_head == null)
+            {
+                value = default;
+                return false;
+            }
+
+            value = _head.Value;
+
+            return true;
+        }
+
+        public bool PeekTail([MaybeNullWhen(false)] out T value)
+        {
+            if (_tail == null)
+            {
+                value = default;
+                return false;
+            }
+
+            value = _tail.Value;
+
+            return true;
+        }
+
+        public bool PopHead([MaybeNullWhen(false)] out T value)
+        {
+            if (_head == null)
+            {
+                value = default;
+                return false;
+            }
+
+            value = _head.Value;
+            RemoveHead();
+
+            return true;
+        }
+
+        public bool PopTail([MaybeNullWhen(false)] out T value)
+        {
+            if (_tail == null)
+            {
+                value = default;
+                return false;
+            }
+
+            value = _tail.Value;
+            RemoveTail();
+
+            return true;
+        }
+
+        public void RemoveHead()
+        {
+            if (_head == null) return;
+
+            _head = _head.Next;
+
+            if (_head == null)
+                _tail = null;
+            else
+                _head.Prev = null;
+
+            Count--;
+        }
+
+        public void RemoveTail()
+        {
+            if (_tail == null) return;
+
+            _tail = _tail.Prev;
+
+            if (_tail == null)
+                _head = null;
+            else
+                _tail.Next = null;
+
+            Count--;
         }
     }
 }

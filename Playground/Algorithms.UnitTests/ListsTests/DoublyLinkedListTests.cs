@@ -258,5 +258,122 @@ namespace Algorithms.UnitTests.Lists
 
             Assert.True(new List<int> {30, 200, 20, 100, 10}.SequenceEqual(list.GetReverseEnumerator()));
         }
+
+        [Fact]
+        public void GetReverseEnumerator_Return_Items_In_Reversed_Order()
+        {
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
+                .ToList();
+
+            var list = new DoublyLinkedList<int>(expectedList);
+
+            expectedList.Reverse();
+
+            Assert.True(expectedList.SequenceEqual(list.GetReverseEnumerator()));
+        }
+
+        [Fact]
+        public void RemoveHead_Should_Work_On_EmptyList()
+        {
+            new DoublyLinkedList<int>().RemoveHead();
+        }
+
+        [Fact]
+        public void RemoveHead_Should_Remove_List_Single_Item()
+        {
+            var list = new DoublyLinkedList<int> {10};
+
+            list.RemoveHead();
+
+            Assert.Empty(list);
+        }
+
+        [Fact]
+        public void RemoveHead_Should_Remove_List_Head()
+        {
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
+                .ToList();
+            var list = new DoublyLinkedList<int>(expectedList);
+
+            list.RemoveHead();
+
+            Assert.True(expectedList.Skip(1).SequenceEqual(list));
+        }
+
+        [Fact]
+        public void RemoveTail_Should_Work_On_EmptyList()
+        {
+            new DoublyLinkedList<int>().RemoveTail();
+        }
+
+        [Fact]
+        public void RemoveTail_Should_Remove_List_Single_Item()
+        {
+            var list = new DoublyLinkedList<int> {10};
+
+            list.RemoveTail();
+
+            Assert.Empty(list);
+        }
+
+        [Fact]
+        public void RemoveTail_Should_Remove_List_Head()
+        {
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
+                .ToList();
+            var list = new DoublyLinkedList<int>(expectedList);
+
+            list.RemoveTail();
+
+            Assert.True(expectedList.Take(expectedList.Count() - 1).SequenceEqual(list));
+        }
+
+        [Fact]
+        public void PeekHead_Should_Return_False_On_EmptyList()
+        {
+            Assert.False(new DoublyLinkedList<int>().PeekHead(out var _));
+        }
+
+        [Fact]
+        public void PeekHead_Should_Return_True_On_NoneEmptyList()
+        {
+            Assert.True(new DoublyLinkedList<int> {10}.PeekHead(out var _));
+        }
+
+        [Fact]
+        public void PeekHead_Should_Return_Head_Value()
+        {
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
+                .ToList();
+            var list = new DoublyLinkedList<int>(expectedList);
+
+            list.PeekHead(out var value);
+
+            Assert.Equal(expectedList.First(), value);
+        }
+
+        [Fact]
+        public void PeekTail_Should_Return_False_On_EmptyList()
+        {
+            Assert.False(new DoublyLinkedList<int>().PeekTail(out var _));
+        }
+
+        [Fact]
+        public void PeekTail_Should_Return_True_On_NoneEmptyList()
+        {
+            Assert.True(new DoublyLinkedList<int> {10}.PeekTail(out var _));
+        }
+
+        [Fact]
+        public void PeekTail_Should_Return_Head_Value()
+        {
+            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
+                .ToList();
+            var list = new DoublyLinkedList<int>(expectedList);
+
+            list.PeekTail(out var value);
+
+            Assert.Equal(expectedList.Last(), value);
+        }
     }
 }
