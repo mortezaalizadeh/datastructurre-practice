@@ -7,8 +7,8 @@ namespace Algorithms.UnitTests.Lists
 {
     public class LinkedListTests
     {
-        private readonly Random _random = new();
         private readonly IReadOnlyList<int> _prePopulatedRandomList;
+        private readonly Random _random = new();
 
         public LinkedListTests()
         {
