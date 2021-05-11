@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Algorithms.Lists;
 using Xunit;
 
 namespace Algorithms.UnitTests.Lists
@@ -8,17 +8,25 @@ namespace Algorithms.UnitTests.Lists
     public class LinkedListTests
     {
         private readonly Random _random = new();
+        private readonly IReadOnlyList<int> _prePopulatedRandomList;
+
+        public LinkedListTests()
+        {
+            _prePopulatedRandomList = Enumerable.Range(0, _random.Next(100, 1000))
+                .Select(i => _random.Next(0, 1000000))
+                .ToList();
+        }
 
         [Fact]
         public void Empty_List_Count_Should_Be_Zero()
         {
-            Assert.Empty(new LinkedList<int>());
+            Assert.Empty(new Algorithms.Lists.LinkedList<int>());
         }
 
         [Fact]
         public void Add_Should_Add_Item_To_EmptyList()
         {
-            var list = new LinkedList<int>();
+            var list = new Algorithms.Lists.LinkedList<int>();
 
             list.Add(10);
 
@@ -28,7 +36,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Add_Should_Add_Item_To_Non_EmptyList()
         {
-            var list = new LinkedList<int>();
+            var list = new Algorithms.Lists.LinkedList<int>();
 
             list.Add(10);
             list.Add(20);
@@ -39,7 +47,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Add_Should_Increment_Count()
         {
-            var list = new LinkedList<int>();
+            var list = new Algorithms.Lists.LinkedList<int>();
 
             list.Add(10);
             list.Add(20);
@@ -52,43 +60,35 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Constructor_Should_Keep_Added_Order()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new LinkedList<int>(expectedList);
+            var list = new Algorithms.Lists.LinkedList<int>(_prePopulatedRandomList);
 
-            Assert.True(expectedList.SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.SequenceEqual(list));
         }
 
         [Fact]
         public void Should_Keep_Added_Order()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new LinkedList<int>();
+            var list = new Algorithms.Lists.LinkedList<int>();
 
-            foreach (var item in expectedList) list.Add(item);
+            foreach (var item in _prePopulatedRandomList) list.Add(item);
 
-            Assert.True(expectedList.SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.SequenceEqual(list));
         }
 
         [Fact]
         public void Should_Return_Count_Correctly()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new LinkedList<int>(expectedList);
+            var list = new Algorithms.Lists.LinkedList<int>(_prePopulatedRandomList);
 
-            Assert.Equal(expectedList.Count, list.Count);
+            Assert.Equal(_prePopulatedRandomList.Count, list.Count);
         }
 
         [Fact]
         public void Clear_Should_Set_Count_To_Zero()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new LinkedList<int>(expectedList);
+            var list = new Algorithms.Lists.LinkedList<int>(_prePopulatedRandomList);
 
-            Assert.Equal(expectedList.Count, list.Count);
+            Assert.Equal(_prePopulatedRandomList.Count, list.Count);
 
             list.Clear();
 
@@ -98,7 +98,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Contains_Should_Return_False_If_Item_Not_Exists()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.DoesNotContain(30, list);
         }
@@ -106,7 +106,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Contains_Should_Return_True_If_Item_Exists()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.Contains(20, list);
         }
@@ -114,7 +114,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Return_False_If_Item_Not_Exists()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.False(list.Remove(30));
         }
@@ -122,7 +122,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Return_True_If_Item_Exists()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.True(list.Remove(20));
         }
@@ -130,7 +130,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Delete_Item()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.Contains(20, list);
             list.Remove(20);
@@ -140,7 +140,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Decrement_Count()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.Equal(2, list.Count);
             list.Remove(20);
@@ -150,7 +150,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void AddHead_Should_Add_Item_To_EmptyList_Head()
         {
-            var list = new LinkedList<int>();
+            var list = new Algorithms.Lists.LinkedList<int>();
 
             list.AddHead(10);
 
@@ -160,7 +160,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void AddHead_Should_Add_Item_To_NonEmptyList_Head()
         {
-            var list = new LinkedList<int> {10};
+            var list = new Algorithms.Lists.LinkedList<int> {10};
 
             list.AddHead(20);
 
@@ -171,7 +171,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void AddHead_Should_Increment_Count()
         {
-            var list = new LinkedList<int> {10};
+            var list = new Algorithms.Lists.LinkedList<int> {10};
 
             list.AddHead(20);
 
@@ -181,7 +181,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertBefore_Should_Return_False_If_Item_NotFound()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.False(list.InsertBefore(30, 100));
         }
@@ -189,7 +189,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertBefore_Should_Return_True_If_Item_Found()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.True(list.InsertBefore(20, 100));
         }
@@ -197,7 +197,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertBefore_Should_Insert_Before_Found_Item()
         {
-            var list = new LinkedList<int> {10};
+            var list = new Algorithms.Lists.LinkedList<int> {10};
 
             list.InsertBefore(10, 100);
 
@@ -219,7 +219,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertAfter_Should_Return_False_If_Item_NotFound()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.False(list.InsertAfter(30, 100));
         }
@@ -227,7 +227,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertAfter_Should_Return_True_If_Item_Found()
         {
-            var list = new LinkedList<int> {10, 20};
+            var list = new Algorithms.Lists.LinkedList<int> {10, 20};
 
             Assert.True(list.InsertAfter(20, 100));
         }
@@ -235,7 +235,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertAfter_Should_Insert_After_Found_Item()
         {
-            var list = new LinkedList<int> {10};
+            var list = new Algorithms.Lists.LinkedList<int> {10};
 
             list.InsertAfter(10, 100);
 

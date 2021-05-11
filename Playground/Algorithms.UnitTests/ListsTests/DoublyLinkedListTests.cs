@@ -8,7 +8,15 @@ namespace Algorithms.UnitTests.Lists
 {
     public class DoublyLinkedListTests
     {
+        private readonly IReadOnlyList<int> _prePopulatedRandomList;
         private readonly Random _random = new();
+
+        public DoublyLinkedListTests()
+        {
+            _prePopulatedRandomList = Enumerable.Range(0, _random.Next(100, 1000))
+                .Select(i => _random.Next(0, 1000000))
+                .ToList();
+        }
 
         [Fact]
         public void Empty_List_Count_Should_Be_Zero()
@@ -53,43 +61,35 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Constructor_Should_Keep_Added_Order()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
-            Assert.True(expectedList.SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.SequenceEqual(list));
         }
 
         [Fact]
         public void Should_Keep_Added_Order()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
             var list = new DoublyLinkedList<int>();
 
-            foreach (var item in expectedList) list.AddTail(item);
+            foreach (var item in _prePopulatedRandomList) list.AddTail(item);
 
-            Assert.True(expectedList.SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.SequenceEqual(list));
         }
 
         [Fact]
         public void Should_Return_Count_Correctly()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
-            Assert.Equal(expectedList.Count, list.Count);
+            Assert.Equal(_prePopulatedRandomList.Count, list.Count);
         }
 
         [Fact]
         public void Clear_Should_Set_Count_To_Zero()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
-            Assert.Equal(expectedList.Count, list.Count);
+            Assert.Equal(_prePopulatedRandomList.Count, list.Count);
 
             list.Clear();
 
@@ -262,14 +262,9 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void GetReverseEnumerator_Return_Items_In_Reversed_Order()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
-            var list = new DoublyLinkedList<int>(expectedList);
-
-            expectedList.Reverse();
-
-            Assert.True(expectedList.SequenceEqual(list.GetReverseEnumerator()));
+            Assert.True(_prePopulatedRandomList.Reverse().SequenceEqual(list.GetReverseEnumerator()));
         }
 
         [Fact]
@@ -291,13 +286,11 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void RemoveHead_Should_Remove_List_Head()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
             list.RemoveHead();
 
-            Assert.True(expectedList.Skip(1).SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.Skip(1).SequenceEqual(list));
         }
 
         [Fact]
@@ -319,13 +312,11 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void RemoveTail_Should_Remove_List_Head()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
             list.RemoveTail();
 
-            Assert.True(expectedList.Take(expectedList.Count() - 1).SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.Take(_prePopulatedRandomList.Count() - 1).SequenceEqual(list));
         }
 
         [Fact]
@@ -343,13 +334,11 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void PeekHead_Should_Return_Head_Value()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
             list.PeekHead(out var value);
 
-            Assert.Equal(expectedList.First(), value);
+            Assert.Equal(_prePopulatedRandomList.First(), value);
         }
 
         [Fact]
@@ -367,13 +356,11 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void PeekTail_Should_Return_Head_Value()
         {
-            var expectedList = Enumerable.Range(0, _random.Next(100, 1000)).Select(i => _random.Next(0, 1000000))
-                .ToList();
-            var list = new DoublyLinkedList<int>(expectedList);
+            var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
             list.PeekTail(out var value);
 
-            Assert.Equal(expectedList.Last(), value);
+            Assert.Equal(_prePopulatedRandomList.Last(), value);
         }
     }
 }
