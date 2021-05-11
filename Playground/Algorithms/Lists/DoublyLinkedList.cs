@@ -237,7 +237,7 @@ namespace Algorithms.Lists
             }
         }
 
-        public bool PeekHead([MaybeNullWhen(false)] out T value)
+        public bool PeekHead(out T value)
         {
             if (_head == null)
             {
@@ -250,7 +250,7 @@ namespace Algorithms.Lists
             return true;
         }
 
-        public bool PeekTail([MaybeNullWhen(false)] out T value)
+        public bool PeekTail(out T value)
         {
             if (_tail == null)
             {
@@ -263,7 +263,7 @@ namespace Algorithms.Lists
             return true;
         }
 
-        public bool PopHead([MaybeNullWhen(false)] out T value)
+        public bool PopHead(out T value)
         {
             if (_head == null)
             {
@@ -277,7 +277,7 @@ namespace Algorithms.Lists
             return true;
         }
 
-        public bool PopTail([MaybeNullWhen(false)] out T value)
+        public bool PopTail(out T value)
         {
             if (_tail == null)
             {
