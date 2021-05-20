@@ -145,5 +145,17 @@ namespace Algorithms.UnitTests.TreeTests
             Assert.NotNull(tree.Find(
                 _prePopulatedRandomList[_random.Next(0, _prePopulatedRandomList.Count - 1)]));
         }
+
+        [Fact]
+        public void InOrderTraversal_Should_Return_Items_In_Sorted_Order()
+        {
+            var tree = new BinaryTree<int>(_prePopulatedRandomList);
+
+            var list = new List<int>();
+
+            tree.InOrderTraversal(list.Add);
+
+            Assert.True(_prePopulatedRandomList.OrderBy(item => item).SequenceEqual(list));
+        }
     }
 }

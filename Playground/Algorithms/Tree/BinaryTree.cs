@@ -57,7 +57,7 @@ namespace Algorithms.Tree
 
             var result = item.CompareTo(node.Value);
 
-            return result == 0 || Contains(item, result <= 0 ? node.Left : node.Right);
+            return result == 0 || Contains(item, result < 0 ? node.Left : node.Right);
         }
 
         private static BinaryTreeNode<T> Find(T item, BinaryTreeNode<T> node)
@@ -82,7 +82,7 @@ namespace Algorithms.Tree
 
         private static void Add(T item, BinaryTreeNode<T> node)
         {
-            if (item.CompareTo(node.Value) <= 0)
+            if (item.CompareTo(node.Value) < 0)
             {
                 if (node.Left == null)
                     node.Left = new BinaryTreeNode<T>(item);
