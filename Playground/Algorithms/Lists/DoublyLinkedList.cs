@@ -40,7 +40,8 @@ namespace Algorithms.Lists
 
             while (current != null)
             {
-                if (current.Value.CompareTo(item) == 0) return true;
+                if (current.Value.CompareTo(item) == 0)
+                    return true;
 
                 current = current.Next;
             }
@@ -120,7 +121,7 @@ namespace Algorithms.Lists
             }
             else if (_head != null)
             {
-                _head.Prev = new DoublyLinkedListNode<T>(item) {Next = _head};
+                _head.Prev = new DoublyLinkedListNode<T>(item) { Next = _head };
                 _head = _head.Prev;
             }
 
@@ -135,7 +136,7 @@ namespace Algorithms.Lists
             }
             else if (_tail != null)
             {
-                _tail.Next = new DoublyLinkedListNode<T>(item) {Prev = _tail};
+                _tail.Next = new DoublyLinkedListNode<T>(item) { Prev = _tail };
                 _tail = _tail.Next;
             }
 
@@ -229,6 +230,7 @@ namespace Algorithms.Lists
             if (_head == null)
             {
                 value = default;
+
                 return false;
             }
 
@@ -242,6 +244,7 @@ namespace Algorithms.Lists
             if (_tail == null)
             {
                 value = default;
+
                 return false;
             }
 
@@ -255,6 +258,7 @@ namespace Algorithms.Lists
             if (_head == null)
             {
                 value = default;
+
                 return false;
             }
 
@@ -269,6 +273,7 @@ namespace Algorithms.Lists
             if (_tail == null)
             {
                 value = default;
+
                 return false;
             }
 
@@ -280,7 +285,8 @@ namespace Algorithms.Lists
 
         public void RemoveHead()
         {
-            if (_head == null) return;
+            if (_head == null)
+                return;
 
             _head = _head.Next;
 
@@ -294,7 +300,8 @@ namespace Algorithms.Lists
 
         public void RemoveTail()
         {
-            if (_tail == null) return;
+            if (_tail == null)
+                return;
 
             _tail = _tail.Prev;
 

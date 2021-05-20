@@ -14,7 +14,8 @@ namespace Algorithms.Lists
 
         public LinkedList(IEnumerable<T> items)
         {
-            foreach (var item in items) Add(item);
+            foreach (var item in items)
+                Add(item);
         }
 
         public void Add(T item)
@@ -27,7 +28,8 @@ namespace Algorithms.Lists
             {
                 var current = _head;
 
-                while (current.Next != null) current = current.Next;
+                while (current.Next != null)
+                    current = current.Next;
 
                 current.Next = new LinkedListNode<T>(item);
                 current.Next.Next = null;
@@ -53,7 +55,8 @@ namespace Algorithms.Lists
 
             while (current != null)
             {
-                if (current.Value.CompareTo(item) == 0) return true;
+                if (current.Value.CompareTo(item) == 0)
+                    return true;
 
                 current = current.Next;
             }

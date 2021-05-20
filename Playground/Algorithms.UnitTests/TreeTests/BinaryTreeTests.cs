@@ -119,5 +119,31 @@ namespace Algorithms.UnitTests.TreeTests
             Assert.True(tree.Contains(
                 _prePopulatedRandomList[_random.Next(0, _prePopulatedRandomList.Count - 1)]));
         }
+
+        [Fact]
+        public void Find_Should_Return_False_On_Empty_Tree()
+        {
+            var tree = new BinaryTree<int>();
+
+            Assert.Null(tree.Find(1));
+        }
+
+        [Fact]
+        public void Find_Should_Work_On_Tree_With_Root_Item_Only()
+        {
+            var tree = new BinaryTree<int> { 1 };
+
+            Assert.NotNull(tree.Find(1));
+            Assert.Null(tree.Find(10));
+        }
+
+        [Fact]
+        public void Find_Should_Work_On_Large_Tree()
+        {
+            var tree = new BinaryTree<int>(_prePopulatedRandomList);
+
+            Assert.NotNull(tree.Find(
+                _prePopulatedRandomList[_random.Next(0, _prePopulatedRandomList.Count - 1)]));
+        }
     }
 }

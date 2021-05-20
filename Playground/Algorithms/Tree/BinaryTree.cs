@@ -14,7 +14,8 @@ namespace Algorithms.Tree
 
         public BinaryTree(IEnumerable<T> items)
         {
-            foreach (var item in items) Add(item);
+            foreach (var item in items)
+                Add(item);
         }
 
         public int Count { get; private set; }
@@ -44,6 +45,11 @@ namespace Algorithms.Tree
             return Contains(item, _root);
         }
 
+        public BinaryTreeNode<T> Find(T item)
+        {
+            return Find(item, _root);
+        }
+
         private static bool Contains(T item, BinaryTreeNode<T> node)
         {
             if (node == null)
@@ -52,6 +58,16 @@ namespace Algorithms.Tree
             var result = item.CompareTo(node.Value);
 
             return result == 0 || Contains(item, result <= 0 ? node.Left : node.Right);
+        }
+
+        private static BinaryTreeNode<T> Find(T item, BinaryTreeNode<T> node)
+        {
+            if (node == null)
+                return null;
+
+            var result = item.CompareTo(node.Value);
+
+            return result == 0 ? node : Find(item, result < 0 ? node.Left : node.Right);
         }
 
         public void AddNonRecursive(T item)
@@ -95,6 +111,7 @@ namespace Algorithms.Tree
                     else
                     {
                         node = node.Left;
+
                         continue;
                     }
                 }
@@ -107,6 +124,7 @@ namespace Algorithms.Tree
                     else
                     {
                         node = node.Right;
+
                         continue;
                     }
                 }
@@ -159,7 +177,8 @@ namespace Algorithms.Tree
 
         private static void PreOrderTraversal(Action<T> action, BinaryTreeNode<T> node)
         {
-            if (node == null) return;
+            if (node == null)
+                return;
 
             action(node.Value);
             PreOrderTraversal(action, node.Left);
@@ -168,7 +187,8 @@ namespace Algorithms.Tree
 
         private static void InOrderTraversal(Action<T> action, BinaryTreeNode<T> node)
         {
-            if (node == null) return;
+            if (node == null)
+                return;
 
             InOrderTraversal(action, node.Left);
             action(node.Value);
@@ -177,7 +197,8 @@ namespace Algorithms.Tree
 
         private static void PostOrderTraversal(Action<T> action, BinaryTreeNode<T> node)
         {
-            if (node == null) return;
+            if (node == null)
+                return;
 
             PostOrderTraversal(action, node.Left);
             PostOrderTraversal(action, node.Right);
