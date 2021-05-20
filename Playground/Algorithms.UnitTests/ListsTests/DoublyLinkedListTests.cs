@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Algorithms.Lists;
+
 using Xunit;
 
 namespace Algorithms.UnitTests.Lists
@@ -71,7 +73,8 @@ namespace Algorithms.UnitTests.Lists
         {
             var list = new DoublyLinkedList<int>();
 
-            foreach (var item in _prePopulatedRandomList) list.AddTail(item);
+            foreach (var item in _prePopulatedRandomList)
+                list.AddTail(item);
 
             Assert.True(_prePopulatedRandomList.SequenceEqual(list));
         }
@@ -99,7 +102,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Contains_Should_Return_False_If_Item_Not_Exists()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.DoesNotContain(30, list);
         }
@@ -107,7 +110,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Contains_Should_Return_True_If_Item_Exists()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.Contains(20, list);
         }
@@ -115,7 +118,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Return_False_If_Item_Not_Exists()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.False(list.Remove(30));
         }
@@ -123,7 +126,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Return_True_If_Item_Exists()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.True(list.Remove(20));
         }
@@ -131,7 +134,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Delete_Item()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.Contains(20, list);
             list.Remove(20);
@@ -141,7 +144,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void Remove_Should_Decrement_Count()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.Equal(2, list.Count);
             list.Remove(20);
@@ -161,7 +164,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void AddHead_Should_Add_Item_To_NonEmptyList_Head()
         {
-            var list = new DoublyLinkedList<int> {10};
+            var list = new DoublyLinkedList<int> { 10 };
 
             list.AddHead(20);
 
@@ -172,7 +175,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void AddHead_Should_Increment_Count()
         {
-            var list = new DoublyLinkedList<int> {10};
+            var list = new DoublyLinkedList<int> { 10 };
 
             list.AddHead(20);
 
@@ -182,7 +185,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertBefore_Should_Return_False_If_Item_NotFound()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.False(list.InsertBefore(30, 100));
         }
@@ -190,7 +193,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertBefore_Should_Return_True_If_Item_Found()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.True(list.InsertBefore(20, 100));
         }
@@ -198,7 +201,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertBefore_Should_Insert_Before_Found_Item()
         {
-            var list = new DoublyLinkedList<int> {10};
+            var list = new DoublyLinkedList<int> { 10 };
 
             list.InsertBefore(10, 100);
 
@@ -216,13 +219,14 @@ namespace Algorithms.UnitTests.Lists
             Assert.Equal(20, list.Skip(3).First());
             Assert.Equal(30, list.Last());
 
-            Assert.True(new List<int> {30, 20, 200, 10, 100}.SequenceEqual(list.GetReverseEnumerator()));
+            Assert.True(
+                new List<int> { 30, 20, 200, 10, 100 }.SequenceEqual(list.GetReverseEnumerator()));
         }
 
         [Fact]
         public void InsertAfter_Should_Return_False_If_Item_NotFound()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.False(list.InsertAfter(30, 100));
         }
@@ -230,7 +234,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertAfter_Should_Return_True_If_Item_Found()
         {
-            var list = new DoublyLinkedList<int> {10, 20};
+            var list = new DoublyLinkedList<int> { 10, 20 };
 
             Assert.True(list.InsertAfter(20, 100));
         }
@@ -238,7 +242,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void InsertAfter_Should_Insert_After_Found_Item()
         {
-            var list = new DoublyLinkedList<int> {10};
+            var list = new DoublyLinkedList<int> { 10 };
 
             list.InsertAfter(10, 100);
 
@@ -256,7 +260,8 @@ namespace Algorithms.UnitTests.Lists
             Assert.Equal(200, list.Skip(3).First());
             Assert.Equal(30, list.Last());
 
-            Assert.True(new List<int> {30, 200, 20, 100, 10}.SequenceEqual(list.GetReverseEnumerator()));
+            Assert.True(
+                new List<int> { 30, 200, 20, 100, 10 }.SequenceEqual(list.GetReverseEnumerator()));
         }
 
         [Fact]
@@ -264,7 +269,8 @@ namespace Algorithms.UnitTests.Lists
         {
             var list = new DoublyLinkedList<int>(_prePopulatedRandomList);
 
-            Assert.True(_prePopulatedRandomList.Reverse().SequenceEqual(list.GetReverseEnumerator()));
+            Assert.True(
+                _prePopulatedRandomList.Reverse().SequenceEqual(list.GetReverseEnumerator()));
         }
 
         [Fact]
@@ -276,7 +282,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void RemoveHead_Should_Remove_List_Single_Item()
         {
-            var list = new DoublyLinkedList<int> {10};
+            var list = new DoublyLinkedList<int> { 10 };
 
             list.RemoveHead();
 
@@ -302,7 +308,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void RemoveTail_Should_Remove_List_Single_Item()
         {
-            var list = new DoublyLinkedList<int> {10};
+            var list = new DoublyLinkedList<int> { 10 };
 
             list.RemoveTail();
 
@@ -316,7 +322,8 @@ namespace Algorithms.UnitTests.Lists
 
             list.RemoveTail();
 
-            Assert.True(_prePopulatedRandomList.Take(_prePopulatedRandomList.Count() - 1).SequenceEqual(list));
+            Assert.True(_prePopulatedRandomList.Take(_prePopulatedRandomList.Count() - 1)
+                .SequenceEqual(list));
         }
 
         [Fact]
@@ -328,7 +335,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void PeekHead_Should_Return_True_On_NoneEmptyList()
         {
-            Assert.True(new DoublyLinkedList<int> {10}.PeekHead(out var _));
+            Assert.True(new DoublyLinkedList<int> { 10 }.PeekHead(out var _));
         }
 
         [Fact]
@@ -350,7 +357,7 @@ namespace Algorithms.UnitTests.Lists
         [Fact]
         public void PeekTail_Should_Return_True_On_NoneEmptyList()
         {
-            Assert.True(new DoublyLinkedList<int> {10}.PeekTail(out var _));
+            Assert.True(new DoublyLinkedList<int> { 10 }.PeekTail(out var _));
         }
 
         [Fact]

@@ -4,18 +4,6 @@ using System.Collections.Generic;
 
 namespace Algorithms.Lists
 {
-    public class DoublyLinkedListNode<T> where T : IComparable<T>
-    {
-        public DoublyLinkedListNode(T value)
-        {
-            Value = value;
-        }
-
-        public T Value { get; }
-        public DoublyLinkedListNode<T> Prev { get; set; }
-        public DoublyLinkedListNode<T> Next { get; set; }
-    }
-
     public class DoublyLinkedList<T> : ICollection<T> where T : IComparable<T>
     {
         private DoublyLinkedListNode<T> _head;
